@@ -5,23 +5,26 @@ import (
 	"fmt"
 
 	"github.com/Shopify/sarama"
+	buildMeta "github.com/srimaln91/go-make"
 )
 
 func main() {
 
-	topic := flag.String("key", "", "Key")
+	// Print binary details and terminate the program when --version flag provided.
+	buildMeta.CheckVersion()
+
+	key := flag.String("key", "", "Key")
 	numOfPartitions := flag.Int("partitions", 12, "Partitions")
 
 	flag.Parse()
 
-	if topic == nil || *topic == "" {
+	if key == nil || *key == "" {
 		fmt.Println("Invalid Key")
 		return
 	}
 
 	message := sarama.ProducerMessage{
-		Topic: "trip",
-		Key:   sarama.StringEncoder(*topic),
+		Key:   sarama.StringEncoder(*key),
 		Value: nil,
 	}
 
